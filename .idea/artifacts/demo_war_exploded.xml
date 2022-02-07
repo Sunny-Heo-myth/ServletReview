@@ -11,7 +11,7 @@
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="demo" />
+          <element id="module-output" name="ServletReviewImac" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf:3.0.12.RELEASE" />

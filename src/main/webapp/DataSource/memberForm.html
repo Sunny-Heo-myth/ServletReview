@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register Member</title>
+    <script type="text/javascript">
+        function fn_sendMember(){
+            let formMember = document.formMember;
+            let name = formMember.name.value;
+            let owner = formMember.owner.value;
+            let job = formMember.job.value;
+            let sex = formMember.sex.value;
+            let birth = formMember.birth.value;
+            let death = formMember.death.value;
+
+            if (name.length === 0 || name === "") {
+                alert("Id is necessary.")
+            }
+            else if (owner.length === 0 || owner === "") {
+                alert("You must have your owner.")
+            }
+            else if (job.length === 0 || job === "") {
+                alert("We need to know what do you do.");
+            }
+            else {
+                formMember.method = "post";
+                formMember.action = "MemberServlet"
+                formMember.submit();
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="formMember">
+        <table>
+            <th>member registration form</th>
+            <tr>
+                <td>name</td>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td>owner</td>
+                <td><input type="text" name="owner"></td>
+            </tr>
+            <tr>
+                <td>job</td>
+                <td><input type="text" name="job"></td>
+            </tr>
+            <tr>
+                <td>sex</td>
+                <td><input type="radio" id="male" name="sex" value="M">
+                    <label for="male">male</label><br>
+                    <input type="radio" id="female" name="sex" value="F">
+                    <label for="female">female</label><br>
+                    <input type="radio" id="thirdSex" name="sex" value="O">
+                    <label for="thirdSex">thirdSex</label></td>
+            </tr>
+            <tr>
+                <td>birth</td>
+                <td><input type="date" name="birth"></td>
+            </tr>
+            <tr>
+                <td>death</td>
+                <td><input type="date" name="death"></td>
+            </tr>
+        </table>
+        <input type="button" value="register" onclick="fn_sendMember()">
+        <input type="reset" value="reset">
+        <input type="hidden" name="command" value="addMember">
+    </form>
+</body>
+</html>
