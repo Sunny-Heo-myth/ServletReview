@@ -30,7 +30,7 @@ public class MemberServlet extends HttpServlet {
         }
     }
 
-    private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
+    private void doHandle(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
 
@@ -44,13 +44,11 @@ public class MemberServlet extends HttpServlet {
             String _job = request.getParameter("job");
             String _sex = request.getParameter("sex");
 
-            String _birth = request.getParameter("birth");
-            Date birthDate = new SimpleDateFormat("dd/MM/yyy").parse(_birth);;
+            Date birthDate = new SimpleDateFormat("dd/MM/yyy").parse(request.getParameter("birth"));
             java.sql.Date bDate = new java.sql.Date(birthDate.getTime());
 
-            String _death = request.getParameter("death");
-            Date deathDate = new SimpleDateFormat("dd/MM/yyy").parse(_birth);;
-            java.sql.Date dDate = new java.sql.Date(birthDate.getTime());
+            Date deathDate = new SimpleDateFormat("dd/MM/yyy").parse(request.getParameter("death"));
+            java.sql.Date dDate = new java.sql.Date(deathDate.getTime());
 
             MemberVO vo = new MemberVO();
             vo.setName(_name);
@@ -59,11 +57,12 @@ public class MemberServlet extends HttpServlet {
             vo.setSex(_sex);
             vo.setBirth(bDate);
             vo.setDeath(dDate);
-            //dao.addMember(vo);
+
+            dao.addMember(vo);
         }
         else if (command != null && command.equals("delMember")) {
             String name = request.getParameter("name");
-            //dao.delMember(name);
+            dao.delMember(name);
         }
 
         List<MemberVO> list = dao.listMembers();
@@ -73,8 +72,7 @@ public class MemberServlet extends HttpServlet {
         out.print("<td>name</td><td>ownerName</td><td>job</td>" +
                 "<td>sex</td><td>birthDate</td><td>deathDate</td>");
 
-        for (int i = 0; i < list.size(); i++) {
-            MemberVO memberVO = list.get(i);
+        for (MemberVO memberVO : list) {
             String name = memberVO.getName();
             String owner = memberVO.getOwner();
             String job = memberVO.getJob();
@@ -86,7 +84,7 @@ public class MemberServlet extends HttpServlet {
                     "<tr><td>" + job + "</td><td>" + sex +
                     "<tr><td>" + birth + "</td><td>" + death +
                     "<tr><td>" + "<a href='/ServletReview/MemberServlet?command=delMember&name=" + name +
-                    "'> delete </a></td><td>");
+                    "'> delete member </a></td></tr>");
         }
         out.print("</table></body></html>");
         out.print("<a href='/ServletReview/DataSource/memberForm.html'> register new member </a>");
